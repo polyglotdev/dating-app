@@ -435,7 +435,7 @@ $RECYCLE.BIN/
 ##
 ## Visual Studio Code
 ##
-.vscode/*
+.vscode/
 
 
 domNotes.MD
@@ -443,3 +443,4 @@ StudentAssets.zip
 API/appsettings.json
 
 node_modules/
+.idea/
