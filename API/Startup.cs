@@ -36,16 +36,7 @@ namespace API {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
       });
       services.AddCors();
-      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-      {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
-          ValidateIssuer = false,
-          ValidateAudience = false
-        };
-      });
+      services.AddIdentityServices(_config);
     }
 
     // Dependency Injection point
