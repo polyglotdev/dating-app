@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core'
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = `https:localhost:5001/api/`
-  path = `account/login`
+  baseUrl = 'https://localhost:5001/api/'
+  path = 'account/login'
   constructor(private http: HttpClient) {}
 
   login(model: any) {
