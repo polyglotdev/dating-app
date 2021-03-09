@@ -8,20 +8,33 @@ import { User } from '../models/user'
 })
 export class AccountService {
   baseUrl = 'https://localhost:5001/api/'
-  path = 'account/login'
+  accountLogin = 'account/login'
+  accountRegister = 'account/register'
+
   private currentUserSource = new ReplaySubject<User>(1)
   currentUser$ = this.currentUserSource.asObservable()
 
   constructor(private http: HttpClient) {}
 
   login(model: any) {
-    return this.http.post(`${this.baseUrl}${this.path}`, model).pipe(
-      map((response: User) => {
-        const user = response
+    return this.http.post(`${this.baseUrl}${this.accountLogin}`, model).pipe(
+      map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user))
           this.currentUserSource.next(user)
         }
+      })
+    )
+  }
+
+  register(model: any) {
+    return this.http.post(`${this.baseUrl}${this.accountRegister}`, model).pipe(
+      map((user: User) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user))
+          this.currentUserSource.next(user)
+        }
+        return user
       })
     )
   }
