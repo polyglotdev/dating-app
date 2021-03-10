@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
@@ -13,6 +13,8 @@ import { MessagesComponent } from './messages/messages.component'
 import { SharedModule } from './modules/shared.module'
 import { NavComponent } from './nav/nav.component'
 import { RegisterComponent } from './register/register.component'
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor'
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { RegisterComponent } from './register/register.component'
     ListsComponent,
     MessagesComponent,
     MemberListComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    TestErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,9 @@ import { RegisterComponent } from './register/register.component'
     AppRoutingModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
