@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
+using API.DTOs;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -17,23 +19,28 @@ namespace API.Controllers
   public class UsersController : BaseApiController
   {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UsersController(IUserRepository userRepository)
+    public UsersController(IUserRepository userRepository, IMapper mapper)
     {
+      _mapper = mapper;
       _userRepository = userRepository;
     }
 
     [HttpGet("{username}")]
-    public async Task<ActionResult<AppUser>> GetUser(string username)
+    public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
-      return await _userRepository.GetUserByUsernameAsync(username);
+      var getUser = await _userRepository.GetUserByUsernameAsync(username);
+      return _mapper.Map<MemberDto>(getUser);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
       var getUsers = await _userRepository.GetUsersAsync();
-      return Ok(getUsers);
+      var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(getUsers);
+
+      return Ok();
     }
   }
 }
