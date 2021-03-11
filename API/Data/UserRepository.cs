@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,16 @@ namespace API.Data
     public UserRepository(DataContext context)
     {
       _context = context;
+    }
+
+    public Task<MemberDto> GetMemberAsync()
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public Task<IEnumerable<MemberDto>> GetMembersAsync()
+    {
+      throw new System.NotImplementedException();
     }
 
     public async Task<AppUser> GetUserByIdAsync(int id)
