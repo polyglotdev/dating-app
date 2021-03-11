@@ -2,34 +2,41 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
   public class UserRepository : IUserRepository
   {
-    public Task<AppUser> GetUserByIdAsync(int id)
+    private readonly DataContext _context;
+    public UserRepository(DataContext context)
     {
-      throw new System.NotImplementedException();
+      _context = context;
     }
 
-    public Task<AppUser> GetUserByUsernameAsync(string username)
+    public async Task<AppUser> GetUserByIdAsync(int id)
     {
-      throw new System.NotImplementedException();
+      return await _context.Users.FindAsync();
     }
 
-    public Task<IEnumerable<AppUser>> GetUsersAsync()
+    public async Task<AppUser> GetUserByUsernameAsync(string username)
     {
-      throw new System.NotImplementedException();
+      return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
     }
 
-    public Task<bool> SaveAllAsync()
+    public async Task<IEnumerable<AppUser>> GetUsersAsync()
     {
-      throw new System.NotImplementedException();
+      return await _context.Users.ToListAsync();
+    }
+
+    public async Task<bool> SaveAllAsync()
+    {
+      return await _context.SaveChangesAsync() > 0;
     }
 
     public void Update(AppUser user)
     {
-      throw new System.NotImplementedException();
+      _context.Entry(user).State = EntityState.Modified;
     }
   }
 }
