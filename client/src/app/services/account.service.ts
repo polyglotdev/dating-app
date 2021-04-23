@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ReplaySubject } from 'rxjs'
@@ -7,7 +8,7 @@ import { User } from '../models/user'
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/'
+  baseUrl = environment.apiUrl
   accountLogin = 'account/login'
   accountRegister = 'account/register'
 
