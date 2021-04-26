@@ -21,10 +21,5 @@ namespace API.Entities
     public byte[] PasswordSalt { get; set; }
     public ICollection<Photo> Photos { get; set; }
     public string UserName { get; set; }
-
-    // public int GetAge()
-    // {
-    //   return DateOfBirth.CalculateAge();
-    // }
   }
 }
